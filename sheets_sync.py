@@ -25,6 +25,13 @@ def _get_worksheet():
         return sh.sheet1
 
 
+def read_last_sync() -> str | None:
+    """Baca timestamp ETL terakhir dari cell G1 Google Sheets."""
+    worksheet = _get_worksheet()
+    val = worksheet.acell("G1").value
+    return val if val else None
+
+
 def sync_p2h_sheet(csv_path: Path) -> int:
     df = pd.read_csv(csv_path, dtype=str).fillna("")
     df = df[COLUMNS]
